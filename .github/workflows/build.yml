@@ -3,7 +3,10 @@ name: Build Geode Mod
 on:
   workflow_dispatch:
   push:
-    branches: ["**"]
+    branches: ["main"]
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -19,5 +22,21 @@ jobs:
       - name: Upload .geode file
         uses: actions/upload-artifact@v4
         with:
-          name: gd-auto-deafen
+          name: gd-call-muter-link
           path: ${{ steps.build.outputs.build-output }}
+
+      - name: Save .geode to the "builds" branch
+        shell: bash
+        run: |
+          mkdir -p /tmp/out
+          cp "${{ steps.build.outputs.build-output }}" /tmp/out/ 2>/dev/null || find . -name "*.geode" -not -path "./geode-sdk-clone/*" -exec cp {} /tmp/out/ \;
+          ls -la /tmp/out
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git checkout --orphan builds
+          git rm -rq --cached . || true
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp /tmp/out/*.geode .
+          git add *.geode
+          git commit -m "Build ${GITHUB_SHA::7}"
+          git push -f origin builds
