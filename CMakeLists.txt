@@ -4,9 +4,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64")
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
-project(GDAutoDeafen VERSION 1.0.0)
+project(GDCallMuterLink VERSION 1.0.0)
 
-add_library(${PROJECT_NAME} SHARED src/main.cpp)
+add_library(${PROJECT_NAME} SHARED src/main.cpp src/server.cpp)
 
 if (NOT DEFINED ENV{GEODE_SDK})
     message(FATAL_ERROR "Unable to find Geode SDK! Please define GEODE_SDK environment variable to point to Geode")
@@ -19,3 +19,6 @@ add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
 target_link_libraries(${PROJECT_NAME} ws2_32)
 
 setup_geode_mod(${PROJECT_NAME})
+
+# server.cpp uses winsock2.h, which clashes with the precompiled header
+set_source_files_properties(src/server.cpp PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
