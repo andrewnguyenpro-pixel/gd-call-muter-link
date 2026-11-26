@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="280" viewBox="0 0 900 280" font-family="Segoe UI, -apple-system, Helvetica, Arial, sans-serif">
+  <rect width="900" height="280" rx="16" fill="#0E1014"/>
+  <text x="40" y="40" fill="#E7E9EE" font-size="15" font-weight="600">1. First open: right-click → Open</text>
+  <rect x="40" y="58" width="96" height="96" rx="20" fill="#171A21" stroke="#262A34"/>
+  <rect x="64" y="82" width="48" height="48" rx="12" fill="#6E8BFF"/>
+  <text x="88" y="174" fill="#E7E9EE" font-size="12" text-anchor="middle">GD Call Muter</text>
+  <rect x="150" y="70" width="170" height="110" rx="8" fill="#171A21" stroke="#262A34"/>
+  <rect x="158" y="78" width="154" height="26" rx="6" fill="#6E8BFF"/>
+  <text x="168" y="96" fill="#fff" font-size="13" font-weight="600">Open</text>
+  <text x="168" y="126" fill="#8C93A1" font-size="13">Show Package Contents</text>
+  <text x="168" y="152" fill="#8C93A1" font-size="13">Get Info</text>
+  <text x="40" y="214" fill="#8C93A1" font-size="12">Then click "Open" in the warning box.</text>
+  <text x="40" y="232" fill="#8C93A1" font-size="12">(The app isn't Apple-signed, so a plain</text>
+  <text x="40" y="250" fill="#8C93A1" font-size="12">double-click is blocked the first time.)</text>
+  <line x1="450" y1="30" x2="450" y2="250" stroke="#262A34"/>
+  <text x="480" y="40" fill="#E7E9EE" font-size="15" font-weight="600">2. For "Deafen Discord app": allow key presses</text>
+  <text x="480" y="66" fill="#8C93A1" font-size="12">System Settings → Privacy &amp; Security → Accessibility</text>
+  <rect x="480" y="80" width="380" height="120" rx="12" fill="#171A21" stroke="#262A34"/>
+  <rect x="496" y="96" width="348" height="40" rx="8" fill="#222632"/>
+  <rect x="508" y="104" width="24" height="24" rx="6" fill="#6E8BFF"/>
+  <text x="544" y="121" fill="#E7E9EE" font-size="13">GD Call Muter</text>
+  <rect x="790" y="104" width="40" height="24" rx="12" fill="#34C77B"/><circle cx="818" cy="116" r="9" fill="#fff"/>
+  <text x="496" y="166" fill="#8C93A1" font-size="12">Turn it on, then quit and reopen GD Call Muter.</text>
+  <text x="496" y="186" fill="#8C93A1" font-size="12">Tab mute and discord.com don't need this.</text>
+</svg>

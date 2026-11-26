@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="250" viewBox="0 0 900 250" font-family="Segoe UI, -apple-system, Helvetica, Arial, sans-serif">
+  <rect width="900" height="250" rx="16" fill="#0E1014"/>
+  <rect x="30" y="24" width="840" height="200" rx="12" fill="#171A21" stroke="#262A34"/>
+  <rect x="30" y="24" width="200" height="200" rx="12" fill="#13161C"/>
+  <text x="50" y="56" fill="#8C93A1" font-size="11" font-weight="700">APP SETTINGS</text>
+  <text x="50" y="84" fill="#8C93A1" font-size="13">Voice &amp; Video</text>
+  <rect x="42" y="98" width="176" height="28" rx="6" fill="#2C3140"/>
+  <text x="50" y="117" fill="#E7E9EE" font-size="13" font-weight="600">Keybinds</text>
+  <text x="50" y="146" fill="#8C93A1" font-size="13">Language</text>
+  <text x="256" y="58" fill="#E7E9EE" font-size="17" font-weight="600">Keybinds</text>
+  <rect x="256" y="72" width="140" height="28" rx="6" fill="#34C77B"/>
+  <text x="326" y="91" fill="#0E1014" font-size="13" font-weight="600" text-anchor="middle">Add a Keybind</text>
+  <rect x="256" y="114" width="590" height="70" rx="10" fill="#222632" stroke="#6E8BFF" stroke-width="2"/>
+  <text x="274" y="138" fill="#8C93A1" font-size="11" font-weight="700">ACTION</text>
+  <text x="274" y="164" fill="#E7E9EE" font-size="14">Toggle Deafen</text>
+  <text x="520" y="138" fill="#8C93A1" font-size="11" font-weight="700">KEYBIND</text>
+  <rect x="520" y="146" width="160" height="28" rx="6" fill="#0E1014"/>
+  <text x="600" y="165" fill="#E7E9EE" font-size="13" text-anchor="middle">Ctrl + Shift + F12</text>
+  <text x="256" y="208" fill="#8C93A1" font-size="12">Use the exact same key in GD Call Muter → "Deafen Discord app". Pick keys you never press by accident.</text>
+</svg>
