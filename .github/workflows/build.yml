@@ -1,4 +1,4 @@
-name: Build Geode Mod
+name: Build
 
 on:
   workflow_dispatch:
@@ -9,34 +9,62 @@ permissions:
   contents: write
 
 jobs:
-  build:
-    runs-on: windows-latest
-    name: Windows
+  mod:
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - name: Windows
+            os: windows-latest
+          - name: macOS
+            os: macos-latest
+    name: Mod (${{ matrix.config.name }})
+    runs-on: ${{ matrix.config.os }}
     steps:
       - uses: actions/checkout@v4
-
       - name: Build the mod
-        id: build
         uses: geode-sdk/build-geode-mod@main
+        with:
+          combine: true
 
-      - name: Upload .geode file
-        uses: actions/upload-artifact@v4
+  mac-app:
+    name: Mac app
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build GD Call Muter.app
+        run: ./mac-app/build.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mac-app
+          path: mac-app/build/GD-Call-Muter-Mac.zip
+
+  package:
+    name: Package
+    runs-on: ubuntu-latest
+    needs: ["mod", "mac-app"]
+    steps:
+      - name: Combine Windows + Mac mod builds
+        uses: geode-sdk/build-geode-mod/combine@main
+        id: combine
+      - uses: actions/upload-artifact@v4
         with:
           name: gd-call-muter-link
-          path: ${{ steps.build.outputs.build-output }}
-
-      - name: Save .geode to the "builds" branch
-        shell: bash
+          path: ${{ steps.combine.outputs.build-output }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: mac-app
+          path: mac-app-out
+      - name: Save builds to the "builds" branch
         run: |
-          mkdir -p /tmp/out
-          cp "${{ steps.build.outputs.build-output }}" /tmp/out/ 2>/dev/null || find . -name "*.geode" -not -path "./geode-sdk-clone/*" -exec cp {} /tmp/out/ \;
-          ls -la /tmp/out
+          mkdir -p out
+          find "${{ steps.combine.outputs.build-output }}" -name "*.geode" -exec cp {} out/ \;
+          cp mac-app-out/*.zip out/
+          ls -la out
+          cd out
+          git init -q -b builds
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
-          git checkout --orphan builds
-          git rm -rq --cached . || true
-          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
-          cp /tmp/out/*.geode .
-          git add *.geode
-          git commit -m "Build ${GITHUB_SHA::7}"
-          git push -f origin builds
+          git add -A
+          git commit -qm "Build ${GITHUB_SHA::7}"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" builds

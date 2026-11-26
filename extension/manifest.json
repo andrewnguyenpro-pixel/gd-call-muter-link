@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "GD Call Muter - Browser",
+  "version": "3.0",
+  "description": "Deafens discord.com and mutes instagram.com tabs when GD Call Muter v10 says so.",
+  "host_permissions": [
+    "http://127.0.0.1/*",
+    "https://discord.com/*",
+    "https://*.discord.com/*",
+    "https://www.instagram.com/*",
+    "https://instagram.com/*"
+  ],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["https://discord.com/*", "https://*.discord.com/*", "https://www.instagram.com/*", "https://instagram.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
