@@ -1,0 +1,11 @@
+{
+	"geode": "6.0.0",
+	"gd": {
+		"win": "2.2091"
+	},
+	"id": "nil.gd-call-muter-link",
+	"name": "GD Call Muter Link",
+	"version": "v1.0.0",
+	"developer": "nil",
+	"description": "Sends your exact level % to GD Call Muter on this PC, so it can mute your call and deafen Discord instantly."
+}
