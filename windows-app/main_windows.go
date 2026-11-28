@@ -117,18 +117,18 @@ const (
 type col uint32
 
 const (
-	cBg       col = 0x0E1014
-	cCard     col = 0x171A21
-	cBorder   col = 0x262A34
-	cText     col = 0xE7E9EE
-	cMuted    col = 0x8C93A1
-	cFaint    col = 0x4B515E
-	cAccent   col = 0x6E8BFF
-	cGreen    col = 0x34C77B
-	cRed      col = 0xF06464
-	cTrack    col = 0x2A2E38
-	cControl  col = 0x222632
-	cControlH col = 0x2C3140
+	cBg       col = 0x000000
+	cCard     col = 0x0A0A0A
+	cBorder   col = 0x1F1F1F
+	cText     col = 0xEDEDED
+	cMuted    col = 0x8A8A8A
+	cFaint    col = 0x474747
+	cAccent   col = 0xFFFFFF
+	cGreen    col = 0xFFFFFF
+	cRed      col = 0xE5484D
+	cTrack    col = 0x262626
+	cControl  col = 0x111111
+	cControlH col = 0x1C1C1C
 	cWhite    col = 0xFFFFFF
 )
 
@@ -530,7 +530,11 @@ func toggleSwitch(id, x, y int, on bool) {
 	if on {
 		kx = x + w - pad - k
 	}
-	circle(kx, y+pad, k, argb(cWhite, 255))
+	kc := cWhite
+	if on {
+		kc = cBg
+	}
+	circle(kx, y+pad, k, argb(kc, 255))
 	focusRing(id, x, y, w, h, h/2)
 	addHit(id, x, y, w, h, true)
 }
@@ -548,14 +552,14 @@ func checkbox(id, x, y, w int, labelText, hint string, checked, enabled bool) {
 		if !enabled {
 			a = 80
 		}
-		rr(x, by, b, b, sc(5), argb(cAccent, a), 0)
-		shapes = append(shapes, shape{kind: 2, x: x, y: by, w: b, stroke: argb(cWhite, a), strokeW: float32(sc(2))})
+		rr(x, by, b, b, sc(4), argb(cAccent, a), 0)
+		shapes = append(shapes, shape{kind: 2, x: x, y: by, w: b, stroke: argb(cBg, a), strokeW: float32(sc(2))})
 	} else {
 		border := cFaint
 		if enabled && hoverID == id {
 			border = cMuted
 		}
-		rr(x, by, b, b, sc(5), argb(cControl, 255), argb(border, 255))
+		rr(x, by, b, b, sc(4), argb(cControl, 255), argb(border, 255))
 	}
 	label(labelText, x+b+sc(10), y, w-b-sc(10), rowH, textC, fBody, dtLeft)
 	if hint != "" {
@@ -565,7 +569,7 @@ func checkbox(id, x, y, w int, labelText, hint string, checked, enabled bool) {
 		}
 		label(hint, x, y, w, rowH, hc, fSmall, dtRight)
 	}
-	focusRing(id, x, by, b, b, sc(5))
+	focusRing(id, x, by, b, b, sc(4))
 	addHit(id, x, y, w, rowH, enabled)
 }
 
@@ -603,20 +607,20 @@ func pill(id, x, y, w, h int, s string, enabled, active bool) {
 	if active {
 		stroke = argb(cAccent, 255)
 	}
-	rr(x, y, w, h, sc(8), fill, stroke)
+	rr(x, y, w, h, sc(6), fill, stroke)
 	c := cText
 	if !enabled {
 		c = cFaint
 	}
 	label(s, x+sc(10), y, w-sc(20), h, c, fBody, dtCenter)
-	focusRing(id, x, y, w, h, sc(8))
+	focusRing(id, x, y, w, h, sc(6))
 	addHit(id, x, y, w, h, enabled)
 }
 
 // sectionCard draws a card with title, status, ON switch and % slider,
 // and returns where the option rows start.
 func sectionCard(x, y, w, h int, title string, g *group, switchID, sliderID int) int {
-	rr(x, y, w, h, sc(14), argb(cCard, 255), argb(cBorder, 255))
+	rr(x, y, w, h, sc(8), argb(cCard, 255), argb(cBorder, 255))
 	px := x + sc(18)
 	label(title, px, y+sc(14), sc(200), sc(24), cText, fHead, dtLeft)
 
@@ -703,7 +707,7 @@ func layout(cw int) {
 	// Settings
 	y += ch + sc(12)
 	sh := sc(50) + 3*row + sc(6)
-	rr(x, y, w, sh, sc(14), argb(cCard, 255), argb(cBorder, 255))
+	rr(x, y, w, sh, sc(8), argb(cCard, 255), argb(cBorder, 255))
 	label("Settings", px, y+sc(14), sc(200), sc(24), cText, fHead, dtLeft)
 	ry = y + sc(48)
 	label("Toggle hotkey", px, ry, sc(160), sc(28), cText, fBody, dtLeft)

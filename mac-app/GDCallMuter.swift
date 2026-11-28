@@ -21,17 +21,17 @@ extension Color {
     }
 }
 
-let cBg = Color(hex: 0x0E1014)
-let cCard = Color(hex: 0x171A21)
-let cBorder = Color(hex: 0x262A34)
-let cText = Color(hex: 0xE7E9EE)
-let cMuted = Color(hex: 0x8C93A1)
-let cFaint = Color(hex: 0x4B515E)
-let cAccent = Color(hex: 0x6E8BFF)
-let cGreen = Color(hex: 0x34C77B)
-let cRed = Color(hex: 0xF06464)
-let cControl = Color(hex: 0x222632)
-let cControlH = Color(hex: 0x2C3140)
+let cBg = Color(hex: 0x000000)
+let cCard = Color(hex: 0x0A0A0A)
+let cBorder = Color(hex: 0x1F1F1F)
+let cText = Color(hex: 0xEDEDED)
+let cMuted = Color(hex: 0x8A8A8A)
+let cFaint = Color(hex: 0x474747)
+let cAccent = Color(hex: 0xFFFFFF)
+let cGreen = Color(hex: 0xFFFFFF)
+let cRed = Color(hex: 0xE5484D)
+let cControl = Color(hex: 0x111111)
+let cControlH = Color(hex: 0x1C1C1C)
 
 // MARK: - Key combos
 
@@ -451,8 +451,8 @@ struct Card<Content: View>: View {
         VStack(alignment: .leading, spacing: 10) { content }
             .padding(16)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(cCard))
-            .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).stroke(cBorder, lineWidth: 1))
+            .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(cCard))
+            .overlay(RoundedRectangle(cornerRadius: 8, style: .continuous).stroke(cBorder, lineWidth: 1))
     }
 }
 
@@ -461,12 +461,12 @@ struct CheckStyle: ToggleStyle {
         Button { configuration.isOn.toggle() } label: {
             HStack(spacing: 10) {
                 ZStack {
-                    RoundedRectangle(cornerRadius: 5, style: .continuous)
+                    RoundedRectangle(cornerRadius: 4, style: .continuous)
                         .fill(configuration.isOn ? cAccent : cControl)
                     if configuration.isOn {
-                        Image(systemName: "checkmark").font(.system(size: 10, weight: .bold)).foregroundColor(.white)
+                        Image(systemName: "checkmark").font(.system(size: 10, weight: .bold)).foregroundColor(.black)
                     } else {
-                        RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(cFaint, lineWidth: 1)
+                        RoundedRectangle(cornerRadius: 4, style: .continuous).stroke(cFaint, lineWidth: 1)
                     }
                 }
                 .frame(width: 18, height: 18)
@@ -487,9 +487,9 @@ struct PillStyle: ButtonStyle {
             .foregroundColor(cText)
             .lineLimit(1)
             .frame(width: 130, height: 28)
-            .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
+            .background(RoundedRectangle(cornerRadius: 6, style: .continuous)
                 .fill(configuration.isPressed ? cControlH : cControl))
-            .overlay(RoundedRectangle(cornerRadius: 8, style: .continuous)
+            .overlay(RoundedRectangle(cornerRadius: 6, style: .continuous)
                 .stroke(active ? cAccent : cBorder, lineWidth: 1))
     }
 }
