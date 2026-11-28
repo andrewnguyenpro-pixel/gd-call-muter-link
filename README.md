@@ -45,7 +45,7 @@ Three small pieces work together. Everything stays on your own computer.
   If you see *"Windows protected your PC"*, click **More info → Run anyway** (the app isn't code-signed).
 - **Mac:** unzip `GD-Call-Muter-Mac.zip`, then see [Mac extra steps](#mac-extra-steps) for the first open.
 
-The top line of the app turns **green — "Connected"** once Geometry Dash (with the mod) is running.
+The top line of the app shows **Connected** once Geometry Dash (with the mod) is running.
 
 ### Step 3 — Add the browser extension
 
@@ -60,7 +60,7 @@ Needed for muting the **Instagram tab** and deafening **discord.com**.
 5. **Refresh** your instagram.com and discord.com tabs.
 
 > Keep that folder where it is — the browser loads the extension from it.
-> The bottom line of the app turns **green — "Browser extension connected"** once a discord.com or instagram.com tab is open.
+> The bottom line of the app shows **Browser extension connected** once a discord.com or instagram.com tab is open.
 
 ### Step 4 — (Optional) Deafen the Discord *app*
 
@@ -80,14 +80,14 @@ Only if you use the Discord desktop app instead of discord.com.
 
 | # | What it does |
 | --- | --- |
-| **1** | **Mod status.** Green = connected; shows your live % in a level. |
+| **1** | **Mod status.** Dot turns white when connected. |
 | **2** | **On/off switch** for this section. Instagram and Discord are separate. |
 | **3** | **Trigger %.** Once your run passes this, the section kicks in. Each section has its own. |
 | **4** | **What to mute:** the instagram.com tab, an app's sound (Windows), and/or your microphone. |
 | **5** | **Discord app key** — must match your Toggle Deafen keybind in Discord. |
 | **6** | **Toggle hotkey** (default **F7**): mute/deafen or undo it by hand, any time. |
 | **7** | **Test** — mutes/deafens right now so you can check everything works. Click again to undo. |
-| **8** | **Browser extension status.** Green = connected. |
+| **8** | **Browser extension status.** White dot = connected. |
 
 **Settings:**
 - **Unmute / undeafen when I die or restart** — on by default, so you hear your call again after each attempt.

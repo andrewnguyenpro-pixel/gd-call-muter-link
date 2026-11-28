@@ -16,11 +16,33 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 	"syscall"
 	"unsafe"
 )
 
 const appTitle = "GD Call Muter v10"
+
+// shotPath: run with --shot out.png to save a picture of the window and exit
+// (used to make the README screenshot).
+var shotPath string
+
+func saveShot(bmp uintptr, path string) {
+	var img uintptr
+	pGdipBmpFromHBITMAP.Call(bmp, 0, uintptr(unsafe.Pointer(&img)))
+	if img == 0 {
+		return
+	}
+	// PNG encoder CLSID {557CF406-1A04-11D3-9A73-0000F81EF32E}
+	clsid := struct {
+		d1 uint32
+		d2 uint16
+		d3 uint16
+		d4 [8]byte
+	}{0x557CF406, 0x1A04, 0x11D3, [8]byte{0x9A, 0x73, 0x00, 0x00, 0xF8, 0x1E, 0xF3, 0x2E}}
+	p, _ := syscall.UTF16PtrFromString(path)
+	pGdipSaveImageToFile.Call(img, uintptr(unsafe.Pointer(p)), uintptr(unsafe.Pointer(&clsid)), 0)
+}
 
 var (
 	user32  = syscall.NewLazyDLL("user32.dll")
@@ -80,6 +102,8 @@ var (
 	pGdipDeleteGraphics   = gdiplus.NewProc("GdipDeleteGraphics")
 	pGdipSetSmoothingMode = gdiplus.NewProc("GdipSetSmoothingMode")
 	pGdipSetPixelOffset   = gdiplus.NewProc("GdipSetPixelOffsetMode")
+	pGdipBmpFromHBITMAP   = gdiplus.NewProc("GdipCreateBitmapFromHBITMAP")
+	pGdipSaveImageToFile  = gdiplus.NewProc("GdipSaveImageToFile")
 	pGdipCreatePath       = gdiplus.NewProc("GdipCreatePath")
 	pGdipDeletePath       = gdiplus.NewProc("GdipDeletePath")
 	pGdipAddPathArcI      = gdiplus.NewProc("GdipAddPathArcI")
@@ -777,6 +801,11 @@ func paint() {
 	}
 	pBitBlt.Call(hdc, 0, 0, uintptr(w), uintptr(h), mem, 0, 0, 0xCC0020)
 	pSelectObject.Call(mem, oldBmp)
+	if shotPath != "" {
+		saveShot(bmp, shotPath)
+		shotPath = ""
+		pPostQuitMessage.Call(0)
+	}
 	pDeleteObject.Call(bmp)
 	pDeleteDC.Call(mem)
 	pEndPaint.Call(hwndMain, uintptr(unsafe.Pointer(&ps)))
@@ -1098,6 +1127,16 @@ func main() {
 	if r, _, _ := pGetDpiForSystem.Call(); r > 0 {
 		dpi = int(r)
 	}
+	for i, a := range os.Args {
+		if a == "--shot" && i+1 < len(os.Args) {
+			shotPath = os.Args[i+1]
+		}
+	}
+	// a copy named "...shot...exe" saves its picture next to itself when opened
+	if exe, err := os.Executable(); err == nil && shotPath == "" &&
+		strings.Contains(strings.ToLower(filepath.Base(exe)), "shot") {
+		shotPath = filepath.Join(filepath.Dir(exe), "gd-app-black.png")
+	}
 	comInit()
 	gsi := struct {
 		version            uint32
@@ -1108,7 +1147,7 @@ func main() {
 	pGdiplusStartup.Call(uintptr(unsafe.Pointer(&gpToken)), uintptr(unsafe.Pointer(&gsi)), 0)
 	loadCfg()
 
-	if err := serveWeb(); err != nil {
+	if err := serveWeb(); err != nil && shotPath == "" {
 		pMessageBoxW.Call(0, uintptr(unsafe.Pointer(u16("GD Call Muter is already running (or another app is using port 47322). Close the other copy, including v9, and try again."))),
 			uintptr(unsafe.Pointer(u16(appTitle))), 0x30)
 		return
